@@ -1,0 +1,21 @@
+.settings-container {
+    margin-top: 20px;
+}
+
+ion-list-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--ion-color-primary);
+}
+
+.hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 15px;
+}
+
+ion-item {
+    --padding-start: 10px;
+    margin-bottom: 10px;
+}

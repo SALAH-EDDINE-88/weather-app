@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-label position="stacked">City</ion-label>
+    <ion-input
+      placeholder="Ex: city"
+      [(ngModel)]="city">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Temperature Unit</ion-label>
+    <ion-select [(ngModel)]="unit">
+      <ion-select-option value="metric">Celsius (°C)</ion-select-option>
+      <ion-select-option value="imperial">Fahrenheit (°F)</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="saveSettings()">
+    Save
+  </ion-button>
+
+</ion-content>

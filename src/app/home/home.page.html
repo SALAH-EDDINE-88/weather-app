@@ -1,20 +1,60 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Weather</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/settings">
+        <ion-icon name="settings-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [class.day-bg]="isDaytime()" [class.night-bg]="!isDaytime()">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading weather...</p>
+  </div>
+
+  <div *ngIf="!isLoading && weatherData" class="weather-container">
+
+    <div class="city-info">
+      <h1>{{ weatherData.name }}</h1>
+      <p>{{ currentDate | date:'EEEE, d MMMM' }}</p>
+    </div>
+
+    <div class="current-weather">
+      <img
+        [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@4x.png'"
+        alt="weather icon"
+      />
+      <div class="temp-display">
+        {{ weatherData.main.temp | number:'1.0-0' }}
+        <span class="unit">{{ unitSymbol }}</span>
+      </div>
+      <p class="description">{{ weatherData.weather[0].description | titlecase }}</p>
+    </div>
+
+    <div class="forecast-row">
+      <div class="forecast-card" *ngFor="let item of forecastData">
+        <div class="day-name">
+          {{ item.dt_txt | date:'EEE' }}
+        </div>
+        <img
+          [src]="'https://openweathermap.org/img/wn/' + item.weather[0].icon + '.png'"
+          alt="forecast icon"
+        />
+        <div class="forecast-temp">
+          {{ item.main.temp | number:'1.0-0' }}{{ unitSymbol }}
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
   </div>
 </ion-content>
